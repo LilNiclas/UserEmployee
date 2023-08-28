@@ -5,8 +5,8 @@ import com.example.useremployee.model.User;
 import com.example.useremployee.repositories.EmployeeRepository;
 import com.example.useremployee.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,4 +23,19 @@ public class EmployeeRestController {
     public List<Employee> findEmployees() {
     return employeeRepository.findAll();
     }
+
+    @PostMapping (path = "employee")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Employee postEmployee(@RequestBody Employee employee) {
+        System.out.println(employee);
+        return employeeRepository.save(employee);
+    }
+
+    @PostMapping("/useremp")
+    public User postUserEmployee(@RequestBody Employee employee) {
+        System.out.println(employee);
+        return userRepository.save(employee.getUser());
+    }
+
+
 }
